@@ -12,4 +12,7 @@
 out/
 *.iml
 *.xml
+/.gradle
+/.idea
+/build
 

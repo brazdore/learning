@@ -1,4 +1,4 @@
-package solid;
+package org.example.solid;
 
 import java.util.ArrayList;
 import java.util.List;

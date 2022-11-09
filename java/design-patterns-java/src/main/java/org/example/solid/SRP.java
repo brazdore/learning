@@ -1,4 +1,4 @@
-package solid;
+package org.example.solid;
 
 import java.io.File;
 import java.io.FileNotFoundException;
