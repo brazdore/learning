@@ -19,3 +19,39 @@ dependencies {
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
+
+// Single JAR file with all dependencies bundled.
+val fatJar = task("fatJar", type = Jar::class) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "org.example.patterns.creational.Prototype"
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks.jar.get() as CopySpec)
+}
+
+tasks {
+    "build" {
+        dependsOn(fatJar)
+    }
+}
+
+// Copies all dependencies to build directory.
+tasks.register<Copy>("copyToLibs") {
+    from(configurations.runtimeClasspath)
+    into("$buildDir/libs")
+}
+
+tasks.jar {
+    dependsOn("copyToLibs")
+    manifest {
+        attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(" ") { it.name }
+    }
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "org.example.patterns.creational.Prototype"
+        attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(" ") { it.name }
+    }
+}
