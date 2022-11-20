@@ -20,7 +20,7 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
-// Single JAR file with all dependencies bundled.
+// Build single JAR file with all dependencies bundled. (OK)
 val fatJar = task("fatJar", type = Jar::class) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
@@ -36,7 +36,7 @@ tasks {
     }
 }
 
-// Copies all dependencies to build directory.
+// Copy all dependencies to build directory and use relative path to JARs in classpath. (OK)
 tasks.register<Copy>("copyToLibs") {
     from(configurations.runtimeClasspath)
     into("$buildDir/libs")
@@ -45,13 +45,16 @@ tasks.register<Copy>("copyToLibs") {
 tasks.jar {
     dependsOn("copyToLibs")
     manifest {
+        attributes["Main-Class"] = "org.example.patterns.creational.Prototype"
         attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(" ") { it.name }
     }
 }
 
+// Add every dependency as absolute path in classpath. (Not very good)
 tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "org.example.patterns.creational.Prototype"
-        attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(" ") { it.name }
+        attributes["Class-Path"] =
+            configurations.runtimeClasspath.get().joinToString(" ") { "" + "file:///" + it.absolutePath }
     }
 }
