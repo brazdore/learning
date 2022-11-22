@@ -1,0 +1,21 @@
+---
+- name: Install Golang v1.17.5
+  become: true
+  unarchive:
+    src: https://go.dev/dl/go1.17.5.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+
+- name: Create status.sh script for Golang Calculator
+  blockinfile:
+    dest: "main/scripts/status.sh"
+    block: |
+      #!/bin/sh
+      if pgrep calc ;
+      then
+        echo "Status: Running"
+      else
+        echo "Status: Stopped"
+      fi
+    create: yes
+    mode: "a+x"

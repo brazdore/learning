@@ -1,0 +1,33 @@
+pipeline {
+
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')
+        DOCKERHUB_REPOSITORY_NAME = 'brazdore/ilegra-cn-temafinal01'
+    }
+    stages {
+
+        stage('Get Artifact from JFrog') {
+            steps {
+                rtDownload (
+                    serverId: "jfrog-final-task",
+                    spec: """{
+                        "files": [
+                            {
+                                "pattern": "ilegra-cn-temafinal01/ilegra-cn-temafinal01.war",
+                                "target": "job01/build/libs/ilegra-cn-temafinal01.war"
+                            }
+                        ]
+                    }"""
+                )
+            }
+        }
+
+        stage('Packer Build') {
+            steps {
+                sh 'packer build -var "dockerhub_repository_name=$DOCKERHUB_REPOSITORY_NAME" -var "dockerhub_username=$DOCKERHUB_CREDENTIALS_USR" -var "dockerhub_user_password=$DOCKERHUB_CREDENTIALS_PSW" "job02/packerConfig.json"'
+            }
+        }
+    }
+}

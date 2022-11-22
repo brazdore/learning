@@ -1,0 +1,39 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "golang:1.17.1",
+            "commit": true,
+            "changes": [
+                "WORKDIR /go/main",
+                "EXPOSE 8080",
+                "ENTRYPOINT go run ."
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "main",
+            "destination": "/go/main"
+        },
+        {
+            "type": "file",
+            "source": "scripts",
+            "destination": "/go/scripts"
+        },
+        {
+            "type": "shell",
+            "scripts": [
+                "scripts/init.sh"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "docker-tag",
+            "repository": "go-calc-3891",
+            "tags": "1.0"
+        }
+    ]
+}

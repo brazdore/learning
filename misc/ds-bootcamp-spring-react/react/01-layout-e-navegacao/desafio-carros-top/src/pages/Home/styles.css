@@ -1,0 +1,137 @@
+.home-container {
+    padding-top: 30px;
+    color: white;
+    text-align: center;
+}
+
+.home-image-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.home-image-container img {
+    width: 333px;
+    height: 199px;
+}
+
+.home-content-container {
+    display: flex;
+    justify-content: center;
+    padding: 0 50px 30px 50px;
+}
+
+.home-content-container h1 {
+    min-width: 420px;
+    font-size: 36px;
+}
+
+.home-content-container p {
+    min-width: 420px;
+    font-size: 18px;
+}
+
+.bottom-card-div {
+    display: flex;
+    justify-content: center;
+    padding: 42px 60px 42px 60px;
+    min-height: 123px;
+    margin-top: 25px;
+    background-color: #EDEDED;
+}
+
+.bottom-btn-div {
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+}
+
+.bottom-btn {
+    height: 40px;
+    width: 174px;
+}
+
+.bottom-btn h6 {
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.bottom-content-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-content-div h6 {
+    color: #585858;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+@media (min-width: 768px) {
+    .home-image-container {
+        padding: 80px 200px 40px 200px;
+    }
+
+    .home-content-container {
+        padding: 0 150px 80px 150px;
+    }
+
+    .bottom-card-div {
+        justify-content: left;
+        padding-left: 85px;
+    }
+}
+
+@media (min-width: 992px) {
+    .home-image-container {
+        padding: 80px 250px 20px 250px;
+    }
+
+    .home-image-container img {
+        width: 455px;
+    }
+
+    .home-image-container img {
+        width: 455px;
+        height: 272px;
+    }
+
+    .home-content-container {
+        padding: 0 260px 130px 260px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .home-card {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-evenly;
+    }
+
+    .home-content-container {
+        padding: 150px 30px 150px 70px;
+        text-align: left;
+    }
+
+    .home-image-container {
+        padding: 100px 70px 83px 50px;
+        display: flex;
+        align-items: center;
+    }
+
+    .home-image-container img {
+        width: 333px;
+        height: 199px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .home-image-container img {
+        width: 455px;
+        height: 272px;
+    }
+}

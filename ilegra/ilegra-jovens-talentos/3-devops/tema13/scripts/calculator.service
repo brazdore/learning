@@ -1,0 +1,9 @@
+[Unit]
+Description=Golang Calculator
+
+[Service]
+User=ec2-user
+ExecStart=/home/ec2-user/scripts/run.sh
+
+[Install]
+WantedBy=default.target

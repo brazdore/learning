@@ -1,0 +1,15 @@
+$script = <<-SCRIPT
+    date > /etc/vagrant_provisioned_at
+SCRIPT
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "hashicorp/bionic64"
+    config.vm.synced_folder ".", "/home/vagrant/shared/"
+    config.vm.provision "shell", inline: $script
+    config.vm.provision "shell", inline: "find /home/vagrant/shared/main/scripts -type f -iname \"*.sh\" -exec chmod +x {} \\;"
+    config.vm.provision "shell", inline: "/home/vagrant/shared/main/scripts/provision.sh"
+    config.vm.provision "shell", inline: "/home/vagrant/shared/main/scripts/ansible.sh"
+    config.vm.provision "shell", inline: "cd /home/vagrant/shared/main && scripts/init.sh"
+    config.vm.provision "shell", inline: "cd /home/vagrant/shared/main && scripts/run.sh", run: "always"
+    config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true
+end

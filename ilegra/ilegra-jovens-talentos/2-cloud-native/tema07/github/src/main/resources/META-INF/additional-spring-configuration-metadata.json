@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "GITHUB_TOKEN",
+      "type": "java.lang.String",
+      "description": "Description for GITHUB_TOKEN."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group = 'com.example'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+def springVersion = "2.5.6"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
+    implementation 'com.google.code.gson:gson:2.8.9'
+    developmentOnly "org.springframework.boot:spring-boot-devtools:${springVersion}"
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:${springVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}

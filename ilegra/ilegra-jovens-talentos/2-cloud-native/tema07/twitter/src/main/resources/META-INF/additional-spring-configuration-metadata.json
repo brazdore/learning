@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "CONSUMER_KEY",
+      "type": "java.lang.String",
+      "description": "Description for CONSUMER_KEY."
+    },
+    {
+      "name": "CONSUMER_SECRET",
+      "type": "java.lang.String",
+      "description": "Description for CONSUMER_SECRET."
+    }
+  ]
+}

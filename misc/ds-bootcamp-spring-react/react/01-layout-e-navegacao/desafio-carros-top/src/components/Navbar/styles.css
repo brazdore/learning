@@ -1,0 +1,26 @@
+.main-nav {
+    min-height: 70px;
+    padding: 20px;
+}
+
+.main-menu {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    width: 170px;
+}
+
+.main-menu a:hover {
+    color: white;
+}
+
+.main-menu a.active {
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .content-div {
+        display: flex;
+        justify-content: right;
+    }
+}

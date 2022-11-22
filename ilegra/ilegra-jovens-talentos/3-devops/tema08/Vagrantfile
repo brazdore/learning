@@ -1,0 +1,15 @@
+$script = <<-SCRIPT
+    date > /etc/vagrant_provisioned_at
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "hashicorp/bionic64"
+    config.vm.provision "shell", inline: $script
+    config.vm.provision "file", source: "Vagrantfile", destination: "$HOME"
+    config.vm.provision "file", source: "main", destination: "$HOME/go-calc"
+    config.vm.provision "shell", path: "scripts/get-golang.sh"
+    config.vm.provision "shell", path: "scripts/run.sh", run: "always"
+    config.vm.network "forwarded_port", guest: 8080, host: 8080, auto_correct: true
+
+end

@@ -1,0 +1,36 @@
+[ {
+  "issueID" : 1,
+  "userID" : 1,
+  "bookID" : 1,
+  "rentedAt" : 1632849191722,
+  "returnAt" : 1632244391581,
+  "open" : true
+}, {
+  "issueID" : 2,
+  "userID" : 1,
+  "bookID" : 2,
+  "rentedAt" : 1632849191738,
+  "returnAt" : 1633453991581,
+  "open" : true
+}, {
+  "issueID" : 3,
+  "userID" : 1,
+  "bookID" : 3,
+  "rentedAt" : 1632849191753,
+  "returnAt" : 1632244391581,
+  "open" : true
+}, {
+  "issueID" : 4,
+  "userID" : 3,
+  "bookID" : 4,
+  "rentedAt" : 1632849191771,
+  "returnAt" : 1632546791581,
+  "open" : true
+}, {
+  "issueID" : 5,
+  "userID" : 4,
+  "bookID" : 5,
+  "rentedAt" : 1632849191788,
+  "returnAt" : 1632935591581,
+  "open" : true
+} ]

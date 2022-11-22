@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'application'
+    id 'java'
+}
+
+def hystrixVersion = "1.5.18"
+def springVersion = "2.5.6"
+def ribbonVersion = "2.7.18"
+
+group = 'com.example'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(["com.netflix.hystrix:hystrix-core:${hystrixVersion}",
+                    "com.netflix.hystrix:hystrix-metrics-event-stream:${hystrixVersion}",
+
+                    "com.netflix.ribbon:ribbon-core:${ribbonVersion}",
+                    "com.netflix.ribbon:ribbon-loadbalancer:${ribbonVersion}",
+                    "com.netflix.ribbon:ribbon:${ribbonVersion}",
+                    "com.netflix.ribbon:ribbon-eureka:${ribbonVersion}",
+
+                    'io.github.openfeign:feign-core:11.7',
+                    'io.github.openfeign:feign-gson:11.7',
+
+                    'com.google.code.gson:gson:2.8.9',
+
+                    'com.netflix.eureka:eureka-client:1.10.17',
+
+                    "org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}",
+                    "org.springframework.boot:spring-boot-starter-web:${springVersion}"])
+
+    runtimeOnly(['com.h2database:h2:1.4.200',
+                 'org.postgresql:postgresql:42.3.1'])
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springVersion}"
+}
+
+application {
+    mainClass = 'com.example.appservice.AppServiceApplication'
+}
+
+test {
+    useJUnitPlatform()
+}

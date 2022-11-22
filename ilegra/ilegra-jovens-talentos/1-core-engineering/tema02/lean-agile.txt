@@ -1,0 +1,45 @@
+﻿* Faça uma lista com todos os métodos ágeis, incluindo Scrum e XP e explique em 2 ou 3 linhas como eles funcionam:
+
+Scrum: A metodologia Scrum é executada em pequenos times, que contam com a presença de um Scrum Master e de um Product Owner. Um backlog de produto é gerado a partir da visão do PO. Este backlog de produto transforma-se em backlog de sprint, 'matéria-prima' de cada sprint. Haverá entrega de software a cada sprint, com duração média de 2-4 semanas.
+
+Extreme Programming (XP): No XP, o código é visto como propriedade de todo o time; todo o time é responsável por tudo. Junto ao time também está o cliente final, que ajuda a escrever testes de aceitação. O double-loop learning presente no XP permite a examinação e reestruturação mais efetiva dos processos. A qualidade dimensional no XP nos mostra que nem sempre o melhor é o mais efetivo; devemos construir as soluções mais adequadas aos problemas. Também há a utilização de pair programming e uma ênfase em débito técnico gerenciável.
+
+Adaptive Software Development (ASD): É diferente de outras metodologias de desenvolvimento de software porque se vale de iterações não-lineares do ciclo de vida, que permite que cada ciclo seja modificado e alterado enquanto outro está em execução. Há uma ênfase na velocidade de criação de produto de alta-qualidade e baixa manutenção, envolvendo o cliente na produção. As três características principais do ASD são a) Especulação, b) Colaboração, c) Aprendizado.
+
+Dynamic Software Development Method (DSDM): Criado em 1994, o DSDM foca em projetos com orçamento baixo e prazos apertados. O foco é em entregas constantes e iterações escalonáveis. Partindo de um roadmap inicial e contínuo, é possível incrementar as entregas a partir de feedbacks e verificar se as funcionalidades trazem o benefício esperado.
+
+Feature Driven Development (FDD): Metodologia pensada para times maiores que os normais para métodos ágeis. Iterações curtas permitem entregas concretas em até 2 semanas. Problemas de comunicação podem acontecer quando em um mesmo projeto existem vários times.
+
+Kanban: Kanban é uma forma de mudar o modo como um gerente pensa o progresso e o sucesso de seu time. Com ênfase em um sistema visual, o fluxo de um projeto deve conter políticas explícitas, como regras de negócios ou casos de usos; cada política se torna uma coluna em quadro de Kanban. Em cada coluna podemos ter feedbacks, para melhorar processos futuros.
+ 
+Behavior Driven Development (BDD): Uma evolução da metodologia TDD, o BDD busca trazer pessoas não-técnicas para dentro do processo de desenvolvimento de funcionalidades técnicas. O processo de desenvolvimento BDD é baseado na escrita de cenários de testes e funcionalidades que são necessárias ao negócio. Assim, o desenvolvimento se dará a partir da definição do cliente, que conhece o mercado no qual o software estará inserido. Essa integração multidisciplinar permite um desenvolvimento mais assertivo, com menos bugs e que tende a se manter sustentável no futuro.
+
+
+* Faça um texto de 3 – 5 linhas explicando os problemas com agile:
+
+As mesmas características que geram benefícios no Agile também geram problemas. Se um time julgar errado a quantidade de uma iteração de trabalho, é possível que a entrega seja prejudicada. É fundamental que haja comprometimento de todas as partes envolvidas, e o cliente deverá participar ativamente do processo, sob pena de menor qualidade final. Uma alta rotatividade de profissionais tende a prejudicar ou atrasar o projeto devido à documentação menos detalhada.[a]
+
+No coração do Agile está a satisfação do cliente, com entregas frequentes e escalonáveis de funcionalidades, através de pequenos times e de contato frequente com o cliente, garantindo feedback. Tudo isso permite que um aplicativo seja desenvolvido de modo assertivo e eficaz. Entretanto, alguns problemas surgem ao organizar um projeto desta forma. 
+
+É possível que um time julgue errado a quantidade ou dificuldade de trabalho durante uma iteração, não conseguindo, ao final, entregar o que deveriam. Este problema é especialmente potencializado devido ao curto prazo das iterações, que duram de 2 a 4 semanas.
+
+Também é fundamental que haja um comprometimento de todas as partes envolvidas, incluindo a do cliente, que precisa estar disponível para encontros e para oferecer feedbacks nas funcionalidades atuais e sugerir incrementações futuras. Caso o cliente não esteja comprometido com o projeto, a comunicação não será clara e o projeto tende a piorar de qualidade.
+
+Dado a curta natureza das iterações e pequenos incrementos de funcionalidades, uma alta rotatividade de profissionais durante um projeto tende a prejudicar muito a qualidade do projeto ,uma vez que os novos profissionais podem demorar para entender os detalhes do projeto e da funcionalidade devido à documentação menos extensa e cuidadosa.
+
+Outros problemas surgem na cultura de uma empresa, que pode oferecer resistência na adoção de metodologias ágeis;  também é possível que mesmo as empresas que pretendem aplicá-las podem sofrer com a falta de suporte de seus colaboradores.
+
+
+* Qual a relação entre Agile/Lean e Bi Modal e DevOps?
+
+O modelo Lean é derivado do modelo de 1930 da Toyota, o Toyota Production System. O Lean busca aumentar a eficiência geral do processo de produção de algum bem ou serviço. A eficiência de um processo é aumentada quando os desperdícios são reduzidos ou nulos. Assim, um processo Lean busca um incremento contínuo e escalonável de um produto, reduzindo as atividades redundantes e tornando o processo mais assertivo.
+ 
+Este é justamente o mesmo princípio do Agile, que busca a satisfação do cliente em primeiro lugar, através de entregas frequentes e escalonáveis, que são frutos do trabalho de pequenos times. Ambos buscam uma produção escalonável assertiva e eficaz, com iterações de curto-prazo.
+
+O modelo bi-modal, por sua vez, parece ser a prática de executar um projeto de dois modos diferentes e coesos simultaneamente: o modo A é mais adequado para áreas onde há mais conhecimento e é mais fácil de prever, o modo B é exploratório e busca soluções para novos problemas em área de incerteza. O objetivo é ser capaz de produzir um valor substancial através da rápida entrega de aplicações inovadoras mas que sejam estáveis. Ele surgiu como uma alternativa ao modelo tradicional de desenvolvimento que talvez não oferecesse os serviços necessários às corporações inovadoras. Sendo uma alternativa ao modelo tradicional e que busca a satisfação dos clientes e entregas rápidas e frequentes, o modelo bi-modal é semelhante ao Lean/Agile.
+
+O DevOps é uma prática que combina Development com Operations e busca diminuir o ciclo de vida do desenvolvimento de um projeto, mantendo uma entrega contínua de software. A automação é um princípio fundamental para o DevOps, através de CI/CD, que automatiza a construção, o teste e a implementação, permitindo um time enviar ou alterar um código mais rapidamente e de maneira confiável. Estas práticas fundamentais ao DevOps surgiram oficialmente como conceitos na revolução Agile em 2001, então as semelhanças entre as práticas são notáveis.
+
+
+
+[a] Em até 5 linhas. O texto completo é o resto.

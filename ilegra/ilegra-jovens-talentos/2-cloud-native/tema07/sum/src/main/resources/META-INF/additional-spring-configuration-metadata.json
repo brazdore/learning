@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "TWITTER_URL",
+      "type": "java.lang.String",
+      "description": "Description for TWITTER_URL."
+    },
+    {
+      "name": "GITHUB_URL",
+      "type": "java.lang.String",
+      "description": "Description for GITHUB_URL."
+    }
+  ]
+}

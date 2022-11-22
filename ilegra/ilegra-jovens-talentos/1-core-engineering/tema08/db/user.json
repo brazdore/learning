@@ -1,0 +1,26 @@
+[ {
+  "userID" : 2,
+  "name" : "Ina",
+  "allRentedAmount" : 0,
+  "currentHolding" : 0
+}, {
+  "userID" : 5,
+  "name" : "Calli",
+  "allRentedAmount" : 0,
+  "currentHolding" : 0
+}, {
+  "userID" : 1,
+  "name" : "Amelia",
+  "allRentedAmount" : 3,
+  "currentHolding" : 3
+}, {
+  "userID" : 3,
+  "name" : "Kiara",
+  "allRentedAmount" : 1,
+  "currentHolding" : 1
+}, {
+  "userID" : 4,
+  "name" : "Nenechi",
+  "allRentedAmount" : 1,
+  "currentHolding" : 1
+} ]

@@ -1,0 +1,26 @@
+[ {
+  "bookID" : 1,
+  "title" : "The Art of War",
+  "author" : "Usada Pekora",
+  "inStock" : false
+}, {
+  "bookID" : 2,
+  "title" : "Haachama Cooking 101",
+  "author" : "Haachama",
+  "inStock" : false
+}, {
+  "bookID" : 3,
+  "title" : "A",
+  "author" : "Gawr Gura",
+  "inStock" : false
+}, {
+  "bookID" : 4,
+  "title" : "How to Tako",
+  "author" : "Ninomae Ina'nis",
+  "inStock" : false
+}, {
+  "bookID" : 5,
+  "title" : "How to Tako",
+  "author" : "Ninomae Ina'nis",
+  "inStock" : false
+} ]

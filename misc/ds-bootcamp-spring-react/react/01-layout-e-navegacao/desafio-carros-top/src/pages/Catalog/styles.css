@@ -1,0 +1,40 @@
+.search-card-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding: 42px 20px;
+    background-color: #EDEDED;
+}
+
+.search-card-div input {
+    max-height: 40px;
+    min-width: 300px;
+    border: 0;
+    outline: 0;
+}
+
+input[type="text"] {
+    padding: 12px 0 12px 12px;
+    font-size: 14px;
+    color: #A7A7A7;
+}
+
+.search-card-div button {
+    border-radius: 0 10px 10px 0;
+    max-height: 40px;
+    min-width: 174px;
+}
+
+
+@media (min-width: 768px) {
+    .search-card-div input {
+        min-width: 496px;
+    }
+}
+
+@media (min-width: 992px) {
+    .search-card-div input {
+        min-width: 564px;
+    }
+}

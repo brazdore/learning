@@ -1,0 +1,1 @@
+while true; do sleep 0.01; curl http://localhost:8093/app/playlists/;done

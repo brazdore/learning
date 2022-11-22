@@ -1,0 +1,35 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git branch: 'master', url: "https://github.com/brazdore/ilegra-cn-temafinal01.git"
+            }
+        }
+   
+        stage('Clean Build App') {
+            steps {
+                sh './gradlew clean build'
+            }
+        }
+
+        stage('Publish Artifact in JFrog') {
+            steps {
+                rtUpload (
+                    serverId: "jfrog-final-task",
+                    spec: """{
+                                "files": [
+                                    {
+                                        "pattern": "build/libs/ilegra-cn-temafinal01.war",
+                                        "target": "ilegra-cn-temafinal01"
+                                    }
+                                ]
+                    }"""
+                )
+            }
+        }
+    }
+}
