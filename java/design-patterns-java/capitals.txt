@@ -1,0 +1,6 @@
+Tokyo
+1000
+Seoul
+2000
+Brasilia
+5000

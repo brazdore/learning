@@ -12,6 +12,7 @@ repositories {
 dependencies {
     implementation("org.javatuples:javatuples:1.2")
     implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("com.google.guava:guava:31.1-jre")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
