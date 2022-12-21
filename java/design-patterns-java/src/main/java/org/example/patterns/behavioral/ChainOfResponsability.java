@@ -3,7 +3,9 @@ package org.example.patterns.behavioral;
 import org.example.utils.AnsiColor;
 import org.example.utils.Line;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -40,6 +42,20 @@ public class ChainOfResponsability {
         }
         System.out.println(AnsiColor.PURPLE + "End: " + strongGoblinsemi); // Keep +3 DEF, loses x2 ATK
         Line.reset();
+
+        Line.split();
+
+        GameExercise gameExercise = new GameExercise();
+        Goblin g1 = new Goblin(gameExercise);
+        Goblin g2 = new Goblin(gameExercise);
+        Goblin g3 = new Goblin(gameExercise);
+        GoblinKing gk = new GoblinKing(gameExercise);
+
+        gameExercise.creatures.addAll(List.of(g1, g2, g3, gk));
+        System.out.println(AnsiColor.RED + g1);
+        System.out.println(AnsiColor.RED + g2);
+        System.out.println(AnsiColor.RED + g3);
+        System.out.println(AnsiColor.RED + gk);
     }
 
     static class Creature {
@@ -248,5 +264,101 @@ public class ChainOfResponsability {
         public void close() {
             game.queries.unsubscribe(token);
         }
+    }
+
+    // Exercise
+    static abstract class CreatureExercise {
+        protected GameExercise game;
+        protected int baseAttack, baseDefense;
+
+        public CreatureExercise(GameExercise game, int baseAttack, int baseDefense) {
+            this.game = game;
+            this.baseAttack = baseAttack;
+            this.baseDefense = baseDefense;
+        }
+
+        public abstract int getAttack();
+
+        public abstract int getDefense();
+
+        public abstract void query(Object source, StatQuery sq);
+
+        @Override
+        public String toString() {
+            return "Creature{" +
+                    "atk=" + getAttack() +
+                    ", def=" + getDefense() +
+                    '}';
+        }
+    }
+
+    static class Goblin extends CreatureExercise {
+        protected Goblin(GameExercise game, int baseAttack, int baseDefense) {
+            super(game, baseAttack, baseDefense);
+        }
+
+        public Goblin(GameExercise game) {
+            super(game, 1, 1);
+        }
+
+        @Override
+        public int getAttack() {
+            StatQuery q = new StatQuery(Statistic.ATTACK);
+            for (CreatureExercise c : game.creatures) {
+                c.query(this, q);
+            }
+            return q.result;
+        }
+
+        @Override
+        public int getDefense() {
+            StatQuery q = new StatQuery(Statistic.DEFENSE);
+            for (CreatureExercise c : game.creatures) {
+                c.query(this, q);
+            }
+            return q.result;
+        }
+
+        @Override
+        public void query(Object source, StatQuery sq) {
+            if (source == this) {
+                switch (sq.statistic) {
+                    case ATTACK -> sq.result += baseAttack;
+                    case DEFENSE -> sq.result += baseDefense;
+                }
+            } else if (sq.statistic == Statistic.DEFENSE) {
+                sq.result++;
+            }
+        }
+    }
+
+    static class GoblinKing extends Goblin {
+        public GoblinKing(GameExercise game) {
+            super(game, 3, 3);
+        }
+
+        @Override
+        public void query(Object source, StatQuery sq) {
+            if (source != this && sq.statistic == Statistic.ATTACK) {
+                sq.result++;
+            } else super.query(source, sq);
+        }
+    }
+
+    enum Statistic {
+        ATTACK, DEFENSE
+    }
+
+    static class StatQuery {
+        public Statistic statistic;
+        public int result;
+
+        public StatQuery(Statistic statistic) {
+            this.statistic = statistic;
+        }
+    }
+
+    static class GameExercise {
+        public List<CreatureExercise> creatures = new ArrayList<>();
     }
 }
