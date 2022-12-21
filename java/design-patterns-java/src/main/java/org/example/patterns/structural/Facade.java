@@ -21,24 +21,24 @@ public class Facade {
         private final int lineWidth;
 
         public Buffer(int lineHeight, int lineWidth) {
-            this.characters = new char[lineHeight * lineHeight];
+            this.characters = new char[lineHeight * lineWidth];
             this.lineWidth = lineWidth;
         }
 
         public char charAt(int x, int y) {
-            return characters[lineWidth * y + x];
+            return characters[y * lineWidth + x];
         }
     }
 
     static class Viewport {
 
         private final Buffer buffer;
-        private final int width, height, offsetX, offsetY;
+        private final int height, width, offsetX, offsetY;
 
-        public Viewport(Buffer buffer, int width, int height, int offsetX, int offsetY) {
+        public Viewport(Buffer buffer, int height, int width, int offsetX, int offsetY) {
             this.buffer = buffer;
-            this.width = width;
             this.height = height;
+            this.width = width;
             this.offsetX = offsetX;
             this.offsetY = offsetY;
         }
@@ -50,11 +50,11 @@ public class Facade {
 
     static class Console {
         private final List<Viewport> viewports = new ArrayList<>();
-        private final int width, height;
+        private final int height, width;
 
-        public Console(int width, int height) {
-            this.width = width;
+        public Console(int height, int width) {
             this.height = height;
+            this.width = width;
         }
 
         public void addViewport(Viewport viewport) {
@@ -71,10 +71,10 @@ public class Facade {
             }
         }
 
-        public static Console newConsole(int width, int height) {
+        public static Console newConsole(int height, int width) {
             Buffer buffer = new Buffer(height, width);
-            Viewport viewport = new Viewport(buffer, width, height, 0, 0);
-            Console console = new Console(width, height);
+            Viewport viewport = new Viewport(buffer, height, width, 0, 0);
+            Console console = new Console(height, width);
             console.addViewport(viewport);
             return console;
         }
