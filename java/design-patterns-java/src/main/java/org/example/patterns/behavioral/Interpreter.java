@@ -3,10 +3,8 @@ package org.example.patterns.behavioral;
 import org.example.utils.AnsiColor;
 import org.example.utils.Line;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Interpreter {
@@ -22,9 +20,21 @@ public class Interpreter {
         Element parsed = parse(tokens);
         System.out.println(AnsiColor.YELLOW + exp + " = " + parsed.eval());
 
-        Line.reset();
+        Line.split();
 
-        ExpressionProcessor.calculate("(1+2+3)");
+        ExpressionProcessor expressionProcessor = new ExpressionProcessor();
+        expressionProcessor.parse("1+2+3");
+        expressionProcessor.calculate(); // 6
+        expressionProcessor.clear();
+
+        expressionProcessor.parse("1+2+xy");
+        expressionProcessor.calculate(); // 0
+        expressionProcessor.clear();
+
+        expressionProcessor.addVariable('x', 3);
+        expressionProcessor.parse("(10-2-x)");
+        expressionProcessor.calculate(); // 5
+        expressionProcessor.clear();
     }
 
     // Lexing
@@ -38,7 +48,7 @@ public class Interpreter {
 
     static class Token {
         private final Type type;
-        private String text;
+        private final String text;
 
         public Token(Type type, String text) {
             this.type = type;
@@ -88,7 +98,7 @@ public class Interpreter {
     }
 
     static class Integer implements Element {
-        private int value;
+        private final int value;
 
         public Integer(int value) {
             this.value = value;
@@ -163,18 +173,134 @@ public class Interpreter {
     }
 
     // Exercise
-    static class ExpressionProcessor {
-        public Map<Character, Integer> variables = new HashMap<>();
+    enum Operation {
+        ADDITION("+"),
+        SUBTRACTION("-");
 
-        public static void calculate(String expression) { // "(1+2+3)"
-            expression.chars()
-                    .mapToObj(i -> (char) i)
-                    .filter(c -> !remove(c))
-                    .forEach(System.out::println);
+        final String simbol;
+
+        Operation(String simbol) {
+            this.simbol = simbol;
         }
 
-        private static boolean remove(Character c) {
-            return c == '(' || c == ')';
+        public static Operation fromSimbol(String s) {
+            if (Objects.equals(s, ADDITION.simbol)) {
+                return Operation.ADDITION;
+            }
+
+            if (Objects.equals(s, SUBTRACTION.simbol)) {
+                return Operation.SUBTRACTION;
+            }
+
+            throw new IllegalArgumentException("Unknown operation.");
+        }
+    }
+
+    static class ExpressionProcessor {
+        public Map<Character, java.lang.Integer> variables = new HashMap<>();
+        private final List<java.lang.Integer> numbers = new ArrayList<>();
+        private final List<Operation> operations = new ArrayList<>();
+        private boolean illegal = false;
+
+        public void parse(String expression) { // "(1+2+3)"
+            System.out.println(AnsiColor.YELLOW + "exp: " + expression);
+            Line.reset();
+
+            String withoutParenthesis = expression.replaceAll("[(|)]", "");
+            String[] valueArr = withoutParenthesis.split("[+|-]");
+            String[] operationArr = withoutParenthesis.replaceAll("[0-9a-zA-Z]", "").split("");
+
+            System.out.println(AnsiColor.PURPLE + "valueArr: " + Arrays.toString(valueArr));
+            System.out.println(AnsiColor.PURPLE + "operationArr: " + Arrays.toString(operationArr));
+            Line.reset();
+
+            List<String> valueList = Arrays.stream(valueArr).map(String::valueOf).toList();
+            List<Operation> operationList = Arrays.stream(operationArr)
+                    .map(String::valueOf)
+                    .map(Operation::fromSimbol)
+                    .toList();
+
+            valueList.forEach(s -> {
+                if (s.length() > 1 && s.matches("[a-zA-Z]+")) {
+                    illegal = true;
+                    return;
+                }
+
+                if (s.matches("[a-zA-Z]+") && !variables.containsKey(s.charAt(0))) {
+                    numbers.add(0);
+                    return;
+                }
+
+                if (variables.containsKey(s.charAt(0))) {
+                    numbers.add(variables.get(s.charAt(0)));
+                    return;
+                }
+
+                java.lang.Integer converted = convert(s);
+                if (converted != null) {
+                    numbers.add(converted);
+                }
+            });
+
+            operations.addAll(operationList);
+
+            System.out.println(AnsiColor.RED + "numbers: " + numbers);
+            System.out.println(AnsiColor.BLUE + "operations: " + operations);
+            Line.reset();
+        }
+
+        public void calculate() {
+            if (illegal) {
+                System.out.println(AnsiColor.CYAN + "result: 0");
+                return;
+            }
+
+            final int[] index = {0};
+            AtomicBoolean firstRun = new AtomicBoolean(true);
+            java.lang.Integer reduce = numbers.stream()
+                    .reduce(0, (x, y) -> {
+                        if (firstRun.get()) {
+                            firstRun.set(false);
+                            return y;
+                        }
+                        Operation op = operations.get(index[0]);
+                        index[0] = index[0]++;
+                        return doMath(x, y, op);
+                    });
+            System.out.println(AnsiColor.CYAN + "result: " + reduce);
+            Line.reset();
+        }
+
+        public void addVariable(Character var, java.lang.Integer value) {
+            variables.put(var, value);
+        }
+
+        public void clear() {
+            illegal = false;
+            operations.clear();
+            numbers.clear();
+            variables.clear();
+        }
+
+        private int doMath(int x, int y, Operation op) {
+            System.out.println(AnsiColor.RED + "x: " + x + "; y: " + y + ";op: " + op);
+            if (op == Operation.ADDITION) {
+                return x + y;
+            }
+
+            if (op == Operation.SUBTRACTION) {
+                return x - y;
+            }
+
+            throw new IllegalArgumentException("Operation is not supported.");
+        }
+
+        private static java.lang.Integer convert(String s) {
+            try {
+                return java.lang.Integer.valueOf(s);
+            } catch (NumberFormatException e) {
+                return null;
+            }
         }
     }
 
