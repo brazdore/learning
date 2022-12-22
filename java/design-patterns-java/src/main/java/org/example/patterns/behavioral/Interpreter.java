@@ -27,9 +27,13 @@ public class Interpreter {
         expressionProcessor.calculate(); // 6
         expressionProcessor.clear();
 
+        Line.split();
+
         expressionProcessor.parse("1+2+xy");
         expressionProcessor.calculate(); // 0
         expressionProcessor.clear();
+
+        Line.split();
 
         expressionProcessor.addVariable('x', 3);
         expressionProcessor.parse("(10-2-x)");
@@ -283,7 +287,6 @@ public class Interpreter {
         }
 
         private int doMath(int x, int y, Operation op) {
-            System.out.println(AnsiColor.RED + "x: " + x + "; y: " + y + ";op: " + op);
             if (op == Operation.ADDITION) {
                 return x + y;
             }
