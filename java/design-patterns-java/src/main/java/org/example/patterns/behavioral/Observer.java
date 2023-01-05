@@ -195,7 +195,7 @@ public class Observer {
         private final Game game;
         public int attack = 1;
 
-        public Rat(Game game) {
+        public Rat(Game game) { // When a new Rat comes to play and it is not the first Rat, it will fire a ratEnters() event which will increase its attack by 1 AND fire a notifyRat() event, increasing each other Rat's attack by 1 as well.
             this.game = game;
             game.ratEnters.subscribe((sender, arg) -> {
                 if (sender != this) {
