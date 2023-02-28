@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     implementation("org.javatuples:javatuples:1.2")
+    implementation("org.springframework:spring-context:6.0.5")
+    implementation("org.springframework.statemachine:spring-statemachine-core:2.1.3.RELEASE")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("com.google.inject:guice:5.1.0")

@@ -1,22 +1,34 @@
 package org.example.patterns.behavioral;
 
 import org.javatuples.Pair;
+import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.config.StateMachineBuilder;
+import org.springframework.statemachine.transition.Transition;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class State {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         LightSwitch lightSwitch = new LightSwitch();
         lightSwitch.off();
         lightSwitch.on();
         lightSwitch.on();
         lightSwitch.off();
 
-        PhoneStateMachine.main(new String[]{""});
+        // PhoneStateMachine.main(new String[]{""});
+        // SpringStateMachine.main(new String[]{""});
+
+        CombinationLock combinationLock = new CombinationLock(new int[]{1, 2, 3, 4});
+        combinationLock.enterDigit(1);
+        combinationLock.enterDigit(2);
+        combinationLock.enterDigit(3);
+        combinationLock.enterDigit(4);
+        System.out.println(combinationLock.status);
     }
 
     // Classic Implementation
@@ -155,4 +167,163 @@ public class State {
         }
     }
 
+    // Spring State Machine
+
+    enum States {
+        OFF_HOOK,
+        ON_HOOK,
+        CONNECTING,
+        CONNECTED,
+        ON_HOLD
+    }
+
+    enum Events {
+        CALL_DIALED,
+        HUNG_UP,
+        CALL_CONNECTED,
+        PLACED_ON_HOLD,
+        TAKEN_OFF_HOLD,
+        LEFT_MESSAGE,
+        STOP_USING_PHONE
+    }
+
+    static class SpringStateMachine {
+        public static StateMachine<States, Events> buildMachine() throws Exception {
+            StateMachineBuilder.Builder<States, Events> builder = StateMachineBuilder.builder();
+
+            builder.configureStates()
+                    .withStates()
+                    .initial(States.OFF_HOOK)
+                    .states(Set.of(States.values()));
+
+            builder.configureTransitions()
+                    .withExternal()
+                    .source(States.OFF_HOOK)
+                    .event(Events.CALL_DIALED)
+                    .target(States.CONNECTING)
+                    .and()
+                    .withExternal()
+                    .source(States.OFF_HOOK)
+                    .event(Events.STOP_USING_PHONE)
+                    .target(States.ON_HOOK)
+                    .and()
+                    .withExternal()
+                    .source(States.CONNECTING)
+                    .event(Events.HUNG_UP)
+                    .target(States.OFF_HOOK)
+                    .and()
+                    .withExternal()
+                    .source(States.CONNECTING)
+                    .event(Events.CALL_CONNECTED)
+                    .target(States.CONNECTED)
+                    .and()
+                    .withExternal()
+                    .source(States.CONNECTED)
+                    .event(Events.LEFT_MESSAGE)
+                    .target(States.OFF_HOOK)
+                    .and()
+                    .withExternal()
+                    .source(States.CONNECTED)
+                    .event(Events.HUNG_UP)
+                    .target(States.OFF_HOOK)
+                    .and()
+                    .withExternal()
+                    .source(States.CONNECTED)
+                    .event(Events.PLACED_ON_HOLD)
+                    .target(States.ON_HOLD)
+                    .and()
+                    .withExternal()
+                    .source(States.ON_HOLD)
+                    .event(Events.TAKEN_OFF_HOLD)
+                    .target(States.CONNECTED)
+                    .and()
+                    .withExternal()
+                    .source(States.ON_HOLD)
+                    .event(Events.HUNG_UP)
+                    .target(States.OFF_HOOK);
+
+            return builder.build();
+        }
+
+        public static void main(String[] args) throws Exception {
+            StateMachine<States, Events> machine = buildMachine();
+            machine.start();
+
+            States exitState = States.ON_HOOK;
+
+            BufferedReader console = new BufferedReader(
+                    new InputStreamReader(System.in)
+            );
+
+            do {
+                org.springframework.statemachine.state.State<States, Events> state = machine.getState();
+
+                System.out.println("The phone is currently " + state.getId());
+                System.out.println("Select a trigger: ");
+
+                List<Transition<States, Events>> ts = machine.getTransitions()
+                        .stream()
+                        .filter(t -> t.getSource() == state)
+                        .toList();
+
+                for (int i = 0; i < ts.size(); ++i) {
+                    System.out.println("" + i + ". " + ts.get(i).getTrigger().getEvent());
+                }
+
+                boolean parseOK;
+                int choice = 0;
+                do {
+                    try {
+                        System.out.println("Please enter your choice: ");
+                        choice = Integer.parseInt(console.readLine());
+                        parseOK = choice >= 0 && choice < ts.size();
+                    } catch (Exception e) {
+                        parseOK = false;
+                    }
+                } while (!parseOK);
+
+                // Send event and perform transition
+                machine.sendEvent(ts.get(choice).getTrigger().getEvent());
+
+            } while (machine.getState().getId() != exitState);
+            System.out.println("And we are done!");
+        }
+    }
+
+    // Exercise
+
+    static class CombinationLock {
+        private final int[] combination;
+        public String status;
+        private int digitsEntered;
+        private boolean failed;
+
+        public CombinationLock(int[] combination) {
+            this.combination = combination;
+            reset();
+        }
+
+        private void reset() {
+            status = "LOCKED";
+            digitsEntered = 0;
+            failed = false;
+        }
+
+        public void enterDigit(int digit) {
+            if ("LOCKED".equals(status)) {
+                status = "";
+            }
+
+            if (combination[digitsEntered] != digit) {
+                failed = true;
+            }
+
+            digitsEntered++;
+            status += String.valueOf(digit);
+
+            if (digitsEntered == combination.length) {
+                status = failed ? "ERROR" : "OPEN";
+            }
+        }
+    }
 }
